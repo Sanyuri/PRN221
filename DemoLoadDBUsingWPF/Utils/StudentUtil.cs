@@ -1,4 +1,5 @@
-﻿using DemoLoadDBUsingWPF.Models;
+﻿using DemoLoadDBUsingWPF.Dtos;
+using DemoLoadDBUsingWPF.Models;
 using DemoLoadDBUsingWPF.Services;
 using DemoLoadDBUsingWPF.ServicesImpl;
 using System;
@@ -11,13 +12,13 @@ namespace DemoLoadDBUsingWPF.Utils
 {
     public class StudentUtil
     {
-        public bool validateStudentInfo(string fullName, string? gender, string? department, DateTime? dob, string gpa)
+        public bool validateStudentInfo(StudentDTO student)
         {
-            return validateName(fullName)
-                && validateGender(gender)
-                && validateDepartment(department)
-                && validateDoB(dob)
-                && validateGpa(gpa);
+            return validateName(student.Name)
+                && validateGender(student.Gender)
+                && validateDepartment(student.Department)
+                && validateDoB(student.Dob)
+                && validateGpa(student.Gpa);
         }
 
         private bool validateGpa(string mark)

@@ -20,11 +20,11 @@ namespace DemoLoadDBUsingWPF.ServicesImpl
             {
                 studentDTOs.Add(new StudentDTO()
                 {
-                    Id = student.Id,
+                    Id = student.Id.ToString(),
                     Name = student.Name,
                     Dob = student.Dob,
                     Gender = student.Gender ? "Male" : "Female",
-                    Gpa = student.Gpa,
+                    Gpa = student.Gpa.ToString(),
                     Department = student.Depart.Name
                 });
             }
@@ -42,6 +42,12 @@ namespace DemoLoadDBUsingWPF.ServicesImpl
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void deleteStudent(Student student)
+        {
+            PRN211_1Context.INSTANCE.Students.Remove(student);
+            PRN211_1Context.INSTANCE.SaveChanges();
         }
 
         public List<string> getGenderList()

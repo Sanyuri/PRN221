@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -73,47 +74,48 @@ namespace DemoLoadDBUsingWPF
 
         private void dgvDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            StudentDTO selectedStudent = (StudentDTO)dgvDisplay.SelectedItem;
-            if (selectedStudent != null)
+            //StudentDTO selectedStudent = (StudentDTO)dgvDisplay.SelectedItem;
+            //if (selectedStudent != null)
+            //{
+            //    txtId.Text = selectedStudent.Id.ToString();
+            //    txtFullName.Text = selectedStudent.Name?.ToString();
+            //    cbxGenderInfo.SelectedItem = selectedStudent.Gender?.ToString();
+            //    cbxDepartment.SelectedItem = selectedStudent.Department?.ToString();
+            //    dpkDob.Text = selectedStudent.Dob.ToString();
+            //    txtGpa.Text = selectedStudent.Gpa.ToString();
+            //}
+        }
+
+        private StudentDTO GetStudentDTO()
+        {
+            return new StudentDTO
             {
-                txtId.Text = selectedStudent.Id.ToString();
-                txtFullName.Text = selectedStudent.Name?.ToString();
-                cbxGenderInfo.SelectedItem = selectedStudent.Gender?.ToString();
-                cbxDepartment.SelectedItem = selectedStudent.Department?.ToString();
-                dpkDob.Text = selectedStudent.Dob.ToString();
-                txtGpa.Text = selectedStudent.Gpa.ToString();
-            }
+                Id = txtId.Text,
+                Name = txtFullName.Text,
+                Department = cbxDepartment.SelectedItem?.ToString(),
+                Dob = dpkDob.SelectedDate,
+                Gender = cbxGenderInfo.SelectedItem?.ToString(),
+                Gpa = txtGpa.Text
+            };
         }
 
         private void createStudent(object sender, RoutedEventArgs e)
         {
-            String fullName = txtFullName.Text;
-            String? gender = cbxGenderInfo.SelectedItem?.ToString();
-            String? department = cbxDepartment.SelectedItem?.ToString();
-            DateTime? dob = dpkDob.SelectedDate;
-            String gpa = txtGpa.Text;
+            StudentDTO studentDTO = GetStudentDTO();
 
-            Boolean isValidatedStudent = studentUtil.validateStudentInfo(fullName, gender, department, dob, gpa);
+            Boolean isValidatedStudent = studentUtil.validateStudentInfo(studentDTO);
 
             if (isValidatedStudent)
             {
-                PRN211_1Context.INSTANCE.Students.Add(new Student
+                Student student = new Student()
                 {
-                    Name = fullName,
-                    Gender = gender.Equals("Male") ? true : false,
-                    Depart = departmentService.findDepartByName(department),
-                    Dob = dob,
-                    Gpa = Double.Parse(gpa)
-                });
-                //Student student = new Student()
-                //{
-                //    Name = fullName,
-                //    Gender = gender.Equals("Male") ? true : false,
-                //    Depart = departmentService.findDepartByName(department),
-                //    Dob = dob,
-                //    Gpa = Double.Parse(gpa)
-                //};
-                //studentService.createStudent(student);
+                    Name = studentDTO.Name,
+                    Gender = studentDTO.Gender.Equals("Male") ? true : false,
+                    Depart = departmentService.findDepartByName(studentDTO.Department),
+                    Dob = studentDTO.Dob,
+                    Gpa = Double.Parse(studentDTO.Gpa)
+                };
+                studentService.createStudent(student);
             }
             else
             {
@@ -123,23 +125,18 @@ namespace DemoLoadDBUsingWPF
 
         private void updateStudent(object sender, RoutedEventArgs e)
         {
-            String id = txtId.Text;
-            String fullName = txtFullName.Text;
-            String? gender = cbxGenderInfo.SelectedItem?.ToString();
-            String? department = cbxDepartment.SelectedItem?.ToString();
-            DateTime? dob = dpkDob.SelectedDate;
-            String gpa = txtGpa.Text;
+            StudentDTO studentDTO = GetStudentDTO();
 
-            Boolean isValidatedStudent = studentUtil.validateStudentInfo(fullName, gender, department, dob, gpa);
+            Boolean isValidatedStudent = studentUtil.validateStudentInfo(studentDTO);
 
             if (isValidatedStudent)
             {
-                Student? student = studentService.getStudentById(int.Parse(id));
-                student.Name = fullName;
-                student.Gender = gender.Equals("Male") ? true : false;
-                student.Depart = departmentService.findDepartByName(department);
-                student.Dob = dob;
-                student.Gpa = Double.Parse(gpa);
+                Student? student = studentService.getStudentById(int.Parse(studentDTO.Id));
+                student.Name = studentDTO.Name;
+                student.Gender = studentDTO.Gender.Equals("Male") ? true : false;
+                student.Depart = departmentService.findDepartByName(studentDTO.Department);
+                student.Dob = studentDTO.Dob;
+                student.Gpa = Double.Parse(studentDTO.Gpa);
 
                 studentService.updateStudent(student);
                 Load();
@@ -152,7 +149,18 @@ namespace DemoLoadDBUsingWPF
 
         private void deleteStudent(object sender, RoutedEventArgs e)
         {
-
+            StudentDTO studentDTO = GetStudentDTO();
+            Student? student = studentService.getStudentById(int.Parse(studentDTO.Id));
+            if(student != null)
+            {
+                studentService.deleteStudent(student);
+                MessageBox.Show("Student deleted");
+                Load();
+            }
+            else
+            {
+                MessageBox.Show("Student not found");
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ namespace DemoLoadDBUsingWPF.Services
     {
         List<StudentDTO> convertToDtoList(List<Student> students);
         void createStudent(Student student);
+        void deleteStudent(Student student);
         List<string> getGenderList();
         Student? getStudentById(int v);
         List<Student> getStudentList();
