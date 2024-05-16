@@ -11,7 +11,7 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DataGrid Name="dgvDisplay" Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows ="False" Loaded="Load" SelectionChanged="dgvDisplay_SelectionChanged">
+        <DataGrid Name="dgvDisplay" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows ="False" Loaded="Load" SelectionChanged="dgvDisplay_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="MSSV" Width="*" Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="FullName"  Width="2*" Binding="{Binding Name}"></DataGridTextColumn>
@@ -58,56 +58,57 @@
                 <Border Grid.Row="2" Margin="5,2,5,0" BorderBrush="Black" BorderThickness="1">
                     <StackPanel>
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <StackPanel Grid.Row="0">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                        <ColumnDefinition Width="8*"></ColumnDefinition>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0">Id</Label>
-                                    <Label Grid.Column="1" HorizontalAlignment="Right">Student Information</Label>
-                                </Grid>
-                                <TextBox Name="txtId" IsReadOnly="True"></TextBox>
-                            </StackPanel>
-                            <StackPanel Grid.Row="1">
-                                <Label>FullName</Label>
-                                <TextBox Name="txtFullName"></TextBox>
-                            </StackPanel>
-                            <StackPanel Grid.Row="2">
-                                <Label>Gender</Label>
-                                <ComboBox Name="cbxGenderInfo"></ComboBox>
-                            </StackPanel>
-                            <StackPanel Grid.Row="3">
-                                <Label>Department</Label>
-                                <ComboBox Name="cbxDepartment"></ComboBox>
-                            </StackPanel>
-                            <StackPanel Grid.Row="4">
-                                <Label>Date of Birth</Label>
-                                <DatePicker Name="dpkDob"></DatePicker>
-                            </StackPanel>
-                            <StackPanel Grid.Row="5">
-                                <Label>GPA</Label>
-                                <TextBox Name="txtGpa"></TextBox>
-                            </StackPanel>
-                            <Grid Grid.Row="6" Margin="0,2">
+                            <Label HorizontalAlignment="Right">Student Information</Label>
+                        </Grid>
+                        <Border BorderBrush="Black" BorderThickness="0,1,0,1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="1.5*"></ColumnDefinition>
+                                    <ColumnDefinition Width="3*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Button Grid.Column="0" Margin="5,5,5,5" Click="createStudent">Create</Button>
-                                <Button Grid.Column="1" Margin="5,5,5,5" Click="updateStudent">Update</Button>
-                                <Button Grid.Column="2" Margin="5,5,5,5" Click="deleteStudent">Delete</Button>
+
+                                <Label Grid.Row="0" Grid.Column="0">Id</Label>
+                                <TextBox Grid.Row="0" Grid.Column="1" Name="txtId" IsReadOnly="True" 
+                                         Text="{Binding Path= SelectedItem.Id, ElementName=dgvDisplay, Mode=OneWay}"></TextBox>
+
+                                <Label Grid.Row="1" Grid.Column="0" >FullName</Label>
+                                <TextBox Grid.Row="1" Grid.Column="1" Name="txtFullName"
+                                         Text="{Binding Path= SelectedItem.Name, ElementName=dgvDisplay, Mode=OneWay}"></TextBox>
+
+                                <Label Grid.Row="2" Grid.Column="0">Gender</Label>
+                                <ComboBox Grid.Row="2" Grid.Column="1" Name="cbxGenderInfo"
+                                          SelectedValue="{Binding Path= SelectedItem.Gender, ElementName=dgvDisplay, Mode=OneWay}"></ComboBox>
+
+                                <Label Grid.Row="3" Grid.Column="0">Department</Label>
+                                <ComboBox Grid.Row="3" Grid.Column="1" Name="cbxDepartment"
+                                          SelectedValue="{Binding Path= SelectedItem.Department, ElementName=dgvDisplay, Mode=OneWay}"></ComboBox>
+
+                                <Label Grid.Row="4" Grid.Column="0">Date of Birth</Label>
+                                <DatePicker Grid.Row="4" Grid.Column="1" Name="dpkDob"
+                                            Text="{Binding Path= SelectedItem.Dob, ElementName=dgvDisplay, Mode=OneWay}"></DatePicker>
+
+                                <Label Grid.Row="5" Grid.Column="0">GPA</Label>
+                                <TextBox Grid.Row="5" Grid.Column="1" Name="txtGpa"
+                                         Text="{Binding Path= SelectedItem.Gpa, ElementName=dgvDisplay, Mode=OneWay}"></TextBox>
                             </Grid>
+                        </Border>
+                        <Grid Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Margin="5,5,5,5" Click="createStudent">Create</Button>
+                            <Button Grid.Column="1" Margin="5,5,5,5" Click="updateStudent">Update</Button>
+                            <Button Grid.Column="2" Margin="5,5,5,5" Click="deleteStudent">Delete</Button>
                         </Grid>
                     </StackPanel>
                 </Border>
