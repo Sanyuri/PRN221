@@ -5,29 +5,112 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoLoadDBUsingWPF"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="480" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"></ColumnDefinition>
-            <ColumnDefinition Width="1*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dgvDisplay" Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows ="False" Loaded="Load">
+        <DataGrid Name="dgvDisplay" Grid.Column="0" AutoGenerateColumns="False" CanUserAddRows ="False" Loaded="Load" SelectionChanged="dgvDisplay_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="MSSV" Width="*" Binding="{Binding Id}"></DataGridTextColumn>
                 <DataGridTextColumn Header="FullName"  Width="2*" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Gender" Width="*" Binding="{Binding Gender}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Department" Width="3*" Binding="{Binding Depart.Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Department" Width="3*" Binding="{Binding Department}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Date of birth" Width="2*" Binding="{Binding Dob}"></DataGridTextColumn>
                 <DataGridTextColumn Header="GPA" Width="*" Binding="{Binding Gpa}"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <StackPanel Grid.Column="1">
             <Grid>
-                <StackPanel HorizontalAlignment="Left">
-                    <Label>Filter Department</Label>
-                    <ComboBox Name="cbxDepart"></ComboBox>
-                    <Button Name="btnFilterDepart">Filter</Button>
-                </StackPanel>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                    <RowDefinition Height="*"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="2"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <StackPanel>
+                            <Label HorizontalAlignment="Left">Filter Department</Label>
+                            <ComboBox Name="cbxDepart"></ComboBox>
+                            <Button HorizontalAlignment="Center" Width="50" Margin="0,3" Name="btnFilterDepart" Click="filterByDepartment">Filter</Button>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Column="2">
+                        <StackPanel>
+                            <Label HorizontalAlignment="Left">Filter Gender</Label>
+                            <ComboBox Name="cbxGender"></ComboBox>
+                            <Button HorizontalAlignment="Center" Width="50" Margin="0,3" Name="btnFilterGender" Click="filterByGender">Filter</Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,5">
+                    <StackPanel>
+                        <Label HorizontalAlignment="Left">Search</Label>
+                        <TextBox Height="20" Name="txtSearch" TextChanged="searchStudent"></TextBox>
+                    </StackPanel>
+                </Grid>
+                <Border Grid.Row="2" Margin="5,2,5,0" BorderBrush="Black" BorderThickness="1">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackPanel Grid.Row="0">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="8*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0">Id</Label>
+                                    <Label Grid.Column="1" HorizontalAlignment="Right">Student Information</Label>
+                                </Grid>
+                                <TextBox Name="txtId" IsReadOnly="True"></TextBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="1">
+                                <Label>FullName</Label>
+                                <TextBox Name="txtFullName"></TextBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="2">
+                                <Label>Gender</Label>
+                                <ComboBox Name="cbxGenderInfo"></ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="3">
+                                <Label>Department</Label>
+                                <ComboBox Name="cbxDepartment"></ComboBox>
+                            </StackPanel>
+                            <StackPanel Grid.Row="4">
+                                <Label>Date of Birth</Label>
+                                <DatePicker Name="dpkDob"></DatePicker>
+                            </StackPanel>
+                            <StackPanel Grid.Row="5">
+                                <Label>GPA</Label>
+                                <TextBox Name="txtGpa"></TextBox>
+                            </StackPanel>
+                            <Grid Grid.Row="6" Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Button Grid.Column="0" Margin="5,5,5,5" Click="createStudent">Create</Button>
+                                <Button Grid.Column="1" Margin="5,5,5,5" Click="updateStudent">Update</Button>
+                                <Button Grid.Column="2" Margin="5,5,5,5" Click="deleteStudent">Delete</Button>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </Border>
             </Grid>
         </StackPanel>
     </Grid>

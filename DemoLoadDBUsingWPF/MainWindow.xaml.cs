@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Configuration;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -8,7 +9,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DemoLoadDBUsingWPF.Dtos;
 using DemoLoadDBUsingWPF.Models;
+using DemoLoadDBUsingWPF.Services;
+using DemoLoadDBUsingWPF.ServicesImpl;
+using DemoLoadDBUsingWPF.Utils;
 using Microsoft.EntityFrameworkCore;
 
 namespace DemoLoadDBUsingWPF
@@ -18,6 +23,9 @@ namespace DemoLoadDBUsingWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+        public StudentService studentService = new StudentServiceImpl();
+        public DepartmentService departmentService = new DepartmentServiceImpl();
+        public StudentUtil studentUtil = new StudentUtil();
         public MainWindow()
         {
             InitializeComponent();
@@ -29,10 +37,121 @@ namespace DemoLoadDBUsingWPF
 
         private void Load()
         {
-            var list = PRN211_1Context.INSTANCE.Students.Include(x => x.Depart).ToList();
-            dgvDisplay.ItemsSource = list;
-            var cbxDepartContent = PRN211_1Context.INSTANCE.Departments.ToList();
-            cbxDepart.ItemsSource = cbxDepartContent;
+            List<Student> students = studentService.getStudentList();
+            List<StudentDTO> studentDTOs = studentService.convertToDtoList(students);
+            dgvDisplay.ItemsSource = studentDTOs;
+
+            List<String> departments = departmentService.getDepartmentNameList();
+            departments.Insert(0, "All");
+            cbxDepart.ItemsSource = departments;
+            List<String> genders = studentService.getGenderList();
+            genders.Insert(0, "All");
+            cbxGender.ItemsSource = genders;
+
+            cbxDepartment.ItemsSource = departmentService.getDepartmentNameList();
+            cbxGenderInfo.ItemsSource = studentService.getGenderList();
+        }
+        private void filterByDepartment(object sender, RoutedEventArgs e)
+        {
+            String? selectedDepartment = cbxDepart.SelectedItem.ToString();
+            List<Student> students = studentService.getStudentListByDepartment(selectedDepartment);
+            dgvDisplay.ItemsSource = studentService.convertToDtoList(students);
+        }
+        private void filterByGender(object sender, RoutedEventArgs e)
+        {
+            String? selectedgender = cbxGender.SelectedItem.ToString();
+            List<Student> students = studentService.getStudentListByGender(selectedgender);
+            dgvDisplay.ItemsSource = studentService.convertToDtoList(students);
+        }
+
+        private void searchStudent(object sender, TextChangedEventArgs e)
+        {
+            String? studentName = txtSearch.Text;
+            List<Student> students = studentService.getStudentListByname(studentName);
+            dgvDisplay.ItemsSource = studentService.convertToDtoList(students);
+        }
+
+        private void dgvDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            StudentDTO selectedStudent = (StudentDTO)dgvDisplay.SelectedItem;
+            if (selectedStudent != null)
+            {
+                txtId.Text = selectedStudent.Id.ToString();
+                txtFullName.Text = selectedStudent.Name?.ToString();
+                cbxGenderInfo.SelectedItem = selectedStudent.Gender?.ToString();
+                cbxDepartment.SelectedItem = selectedStudent.Department?.ToString();
+                dpkDob.Text = selectedStudent.Dob.ToString();
+                txtGpa.Text = selectedStudent.Gpa.ToString();
+            }
+        }
+
+        private void createStudent(object sender, RoutedEventArgs e)
+        {
+            String fullName = txtFullName.Text;
+            String? gender = cbxGenderInfo.SelectedItem?.ToString();
+            String? department = cbxDepartment.SelectedItem?.ToString();
+            DateTime? dob = dpkDob.SelectedDate;
+            String gpa = txtGpa.Text;
+
+            Boolean isValidatedStudent = studentUtil.validateStudentInfo(fullName, gender, department, dob, gpa);
+
+            if (isValidatedStudent)
+            {
+                PRN211_1Context.INSTANCE.Students.Add(new Student
+                {
+                    Name = fullName,
+                    Gender = gender.Equals("Male") ? true : false,
+                    Depart = departmentService.findDepartByName(department),
+                    Dob = dob,
+                    Gpa = Double.Parse(gpa)
+                });
+                //Student student = new Student()
+                //{
+                //    Name = fullName,
+                //    Gender = gender.Equals("Male") ? true : false,
+                //    Depart = departmentService.findDepartByName(department),
+                //    Dob = dob,
+                //    Gpa = Double.Parse(gpa)
+                //};
+                //studentService.createStudent(student);
+            }
+            else
+            {
+                MessageBox.Show("Student's information invalid");
+            }
+        }
+
+        private void updateStudent(object sender, RoutedEventArgs e)
+        {
+            String id = txtId.Text;
+            String fullName = txtFullName.Text;
+            String? gender = cbxGenderInfo.SelectedItem?.ToString();
+            String? department = cbxDepartment.SelectedItem?.ToString();
+            DateTime? dob = dpkDob.SelectedDate;
+            String gpa = txtGpa.Text;
+
+            Boolean isValidatedStudent = studentUtil.validateStudentInfo(fullName, gender, department, dob, gpa);
+
+            if (isValidatedStudent)
+            {
+                Student? student = studentService.getStudentById(int.Parse(id));
+                student.Name = fullName;
+                student.Gender = gender.Equals("Male") ? true : false;
+                student.Depart = departmentService.findDepartByName(department);
+                student.Dob = dob;
+                student.Gpa = Double.Parse(gpa);
+
+                studentService.updateStudent(student);
+                Load();
+            }
+            else
+            {
+                MessageBox.Show("Student's information invalid");
+            }
+        }
+
+        private void deleteStudent(object sender, RoutedEventArgs e)
+        {
 
         }
     }
