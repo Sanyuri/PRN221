@@ -29,6 +29,9 @@
                     </Grid>
                 </StackPanel>
             </Grid>
+            <Grid Margin="5">
+                <TextBox x:Name="txtFilter" Height="25" Width="200" TextChanged="txtFilter_TextChanged"></TextBox>
+            </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>

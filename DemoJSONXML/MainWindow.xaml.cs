@@ -163,5 +163,13 @@ namespace DemoJSONXML
             txtName.Text = x.Name;
             cbxGender.Text = x.Gender;
         }
+
+        //filter
+        private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string filter = txtFilter.Text;
+            dgDisplay.ItemsSource = personService.convertToDtoList(people.Where(p => p.Name.ToLower().Contains(filter.ToLower())).ToList());
+            dgDisplay.Items.Refresh();
+        }
     }
 }
