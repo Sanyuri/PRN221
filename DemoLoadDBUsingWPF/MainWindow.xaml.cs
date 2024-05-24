@@ -104,11 +104,14 @@ namespace DemoLoadDBUsingWPF
             StudentDTO studentDTO = GetStudentDTO();
 
             Boolean isValidatedStudent = studentUtil.validateStudentInfo(studentDTO);
-
+            List<Student> students = studentService.getStudentList();
+            //get last student in list
+            Student lastStudent = students.LastOrDefault();
             if (isValidatedStudent)
             {
                 Student student = new Student()
                 {
+                    Id = lastStudent.Id + 1,
                     Name = studentDTO.Name,
                     Gender = studentDTO.Gender.Equals("Male") ? true : false,
                     Depart = departmentService.findDepartByName(studentDTO.Department),
@@ -116,6 +119,7 @@ namespace DemoLoadDBUsingWPF
                     Gpa = Double.Parse(studentDTO.Gpa)
                 };
                 studentService.createStudent(student);
+                Load();
             }
             else
             {
@@ -151,7 +155,7 @@ namespace DemoLoadDBUsingWPF
         {
             StudentDTO studentDTO = GetStudentDTO();
             Student? student = studentService.getStudentById(int.Parse(studentDTO.Id));
-            if(student != null)
+            if (student != null)
             {
                 studentService.deleteStudent(student);
                 MessageBox.Show("Student deleted");
