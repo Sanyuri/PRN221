@@ -23,5 +23,29 @@ namespace DemoWPF
         {
             InitializeComponent();
         }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            var checkBox = sender as CheckBox;
+
+            if (checkBox != null && checkBox.IsChecked == true)
+            {
+                if (checkBox == checkBox1)
+                {
+                    checkBox2.IsChecked = false;
+                    checkBox3.IsChecked = false;
+                }
+                else if (checkBox == checkBox2)
+                {
+                    checkBox1.IsChecked = false;
+                    checkBox3.IsChecked = false;
+                }
+                else if (checkBox == checkBox3)
+                {
+                    checkBox1.IsChecked = false;
+                    checkBox2.IsChecked = false;
+                }
+            }
+        }
     }
 }

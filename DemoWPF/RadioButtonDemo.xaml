@@ -17,6 +17,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <GroupBox Margin="5" Grid.Row="0">
                 <StackPanel>
@@ -26,10 +27,17 @@
                 </StackPanel>
             </GroupBox>
             <GroupBox Margin="5" Grid.Row="1">
+                <ComboBox>
+                    <ComboBoxItem>Group 2 option 1</ComboBoxItem>
+                    <ComboBoxItem>Group 2 option 2</ComboBoxItem>
+                    <ComboBoxItem>Group 2 option 3</ComboBoxItem>
+                </ComboBox>
+            </GroupBox>
+            <GroupBox Margin="5" Grid.Row="2">
                 <StackPanel>
-                    <RadioButton GroupName="Group2">Group 2</RadioButton>
-                    <RadioButton GroupName="Group2">Group 2</RadioButton>
-                    <RadioButton GroupName="Group2">Group 2</RadioButton>
+                    <CheckBox x:Name="checkBox1" Checked="CheckBox_Checked">Group3</CheckBox>
+                    <CheckBox x:Name="checkBox2" Checked="CheckBox_Checked">Group3</CheckBox>
+                    <CheckBox x:Name="checkBox3" Checked="CheckBox_Checked">Group3</CheckBox>
                 </StackPanel>
             </GroupBox>
         </Grid>
