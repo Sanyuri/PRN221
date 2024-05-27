@@ -3,6 +3,11 @@ using System.Text;
 
 internal class Program
 {
+    class User
+    {
+        private string Name {get; set;  }
+        private string Message { get; set; }
+    }
     //static void ConnectServer(string server, int port)
     //{
     //    string message, responseData;
@@ -11,13 +16,13 @@ internal class Program
     //    {
     //        //Create a TcpClient
     //        TcpClient client = new TcpClient(server, port);
-    //        Console.Title = "Client Application 1";
+    //        Console.Title = "Client Application 2";
     //        NetworkStream stream = null;
     //        while (true)
     //        {
     //            Console.WriteLine("Input message <press Enter to exit>:");
     //            message = Console.ReadLine();
-    //            if(message == string.Empty)
+    //            if (message == string.Empty)
     //            {
     //                break;
     //            }
@@ -27,7 +32,7 @@ internal class Program
     //            stream = client.GetStream();
     //            //Send the message to the connected TcpServer
     //            stream.Write(data, 0, data.Length);
-    //            Console.WriteLine("Sent: {0}",message);
+    //            Console.WriteLine("Sent: {0}", message);
     //            //Receive the TcpServer response
     //            //Use buffer to store response bytes
     //            data = new Byte[256];
@@ -38,9 +43,10 @@ internal class Program
     //        }
     //        //Shutdown and end connection
     //        client.Close();
-    //    }catch (Exception ex)
+    //    }
+    //    catch (Exception ex)
     //    {
-    //        Console.WriteLine("Exception: {0}",ex.Message);
+    //        Console.WriteLine("Exception: {0}", ex.Message);
     //    }
     //}
 
@@ -51,7 +57,7 @@ internal class Program
         {
             // Create a TcpClient
             TcpClient client = new TcpClient(server, port);
-            Console.Title = "Client Application 1";
+            Console.Title = "Client Application 2";
             NetworkStream stream = client.GetStream();
 
             // Start a new thread to receive messages from the server
