@@ -1,0 +1,39 @@
+﻿<Window x:Class="WPF_HowKTeam.ComboBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_HowKTeam"
+        mc:Ignorable="d"
+        Title="ComboBox" Height="450" Width="800">
+    <StackPanel Loaded="StackPanel_Loaded">
+        <ComboBox>
+            <Grid Width="200">
+                <CheckBox HorizontalAlignment="Left"></CheckBox>
+                <Button HorizontalAlignment="Right" Content="www.howkteam.com"></Button>
+            </Grid>
+            <Grid Width="200">
+                <CheckBox HorizontalAlignment="Left"></CheckBox>
+                <Button HorizontalAlignment="Right" Content="www.howkteam.com"></Button>
+            </Grid>
+            <Grid Width="200">
+                <CheckBox HorizontalAlignment="Left"></CheckBox>
+                <Button HorizontalAlignment="Right" Content="www.howkteam.com"></Button>
+            </Grid>
+        </ComboBox>
+        <ComboBox Name="cbItemSource" Width="500">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid Width="500">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="abc"></TextBlock>
+                        <TextBlock Grid.Column="1" Text="dasdd"></TextBlock>
+                    </Grid>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+    </StackPanel>
+</Window>

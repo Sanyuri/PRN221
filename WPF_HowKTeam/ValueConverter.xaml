@@ -1,0 +1,16 @@
+﻿<Window x:Class="WPF_HowKTeam.ValueConverter"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        xmlns:converter ="clr-namespace:WPF_HowKTeam"
+        Title="ValueConverter" Height="450" Width="800">
+    <StackPanel>
+        <StackPanel.Resources>
+            <converter:AgeConvert x:Key="ageConvert"></converter:AgeConvert>
+        </StackPanel.Resources>
+        <DatePicker Name="dpkdate"></DatePicker>
+        <TextBlock Text="{Binding ElementName=dpkdate, Path=SelectedDate, Converter={StaticResource ResourceKey=ageConvert}}"></TextBlock>
+    </StackPanel>
+</Window>
