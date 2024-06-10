@@ -1,0 +1,36 @@
+﻿@page
+@model LoadDB.Pages.Students.EditModel
+@{
+}
+
+<form method="post">
+    <table>
+        <tr>
+            <td>Id</td>
+            <td><input asp-for="student.Id" readonly/></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input asp-for="student.Name" type="text"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td><input type="checkbox" asp-for="student.Gender" />Male/Female</td>
+        </tr>
+        <tr>
+            <td>Department</td>
+            <td><select asp-for="student.DepartId" asp-items="ViewBag.Dept"></select></td>
+        </tr>
+        <tr>
+            <td>Dob</td>
+            <td><input type="date" asp-for="student.Dob" /></td>
+        </tr>
+        <tr>
+            <td>GPA</td>
+            <td><input type="text" asp-for="student.Gpa" /></td>
+        </tr>
+        <td colspan="2"><input type="submit" value="update"/></td>
+    </table>
+</form>

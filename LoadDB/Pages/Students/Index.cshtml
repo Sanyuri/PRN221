@@ -1,0 +1,55 @@
+﻿@page
+@model LoadDB.Pages.Students.IndexModel
+@{
+}
+<form method="post">
+@*     <select name="fltDepartment">
+        @foreach(var dept in Model.Departs)
+        {
+            <option value="@dept.Id">@dept.Name</option>
+        }
+    </select> *@
+    @foreach(var dept in Model.Departs)
+    {
+        <div><input type="checkbox" name="@dept.Id" value="@dept.Id" />@dept.Name</div>
+    }
+    <input type="submit" name="Filter"/>
+</form>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Gender(Checkbox)</th>
+        <th>Gender(ComboBox)</th>
+        <th>Gender(RadioButton)</th>
+        <th>DoB</th>
+        <th>Department</th>
+        <th>GPA</th>
+        <th>Action</th>
+    </tr>
+    @foreach (var std in Model.Students)
+    {
+        <tr>
+            <td>@std.Id</td>
+            <td>@std.Name</td>
+            <td>@(std.Gender ? "Male" : "Female")</td>
+            <td><input type="checkbox" checked="@std.Gender" />@(std.Gender ? "Male" : "Female")</td>
+            <td>
+                <select name="gender">
+                    <option selected="@(std.Gender)">Male</option>
+                    <option selected="@(!std.Gender)">Female</option>
+                </select>
+            </td>
+            <td>
+                <input type="radio" name="@std.Id" value="M" @(std.Gender ? "checked" : "")/> Male
+                <input type="radio" name="@std.Id" value="F" @(std.Gender ? "" : "checked") /> Female
+            </td>
+            <td>@std.Dob</td>
+            <td>@std.Depart.Name</td>
+            <td>@std.Gpa</td>
+            <td><a href="Students/Edit?id=@std.Id">Edit</a></td>
+        </tr>
+
+    }
+</table>
