@@ -38,7 +38,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoProject", "DemoProject\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadDB", "LoadDB\LoadDB.csproj", "{B94CD4B2-D288-4FBB-AB3E-DAAA75421B1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoSignalR", "DemoSignalR\DemoSignalR.csproj", "{6ACA4897-E089-49B2-9656-970EC42F72C7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoSignalR", "DemoSignalR\DemoSignalR.csproj", "{6ACA4897-E089-49B2-9656-970EC42F72C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncExample", "AsyncExample\AsyncExample.csproj", "{6C79F2AC-6AD0-4EBF-A6E0-193136399E06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -110,6 +112,10 @@ Global
 		{6ACA4897-E089-49B2-9656-970EC42F72C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6ACA4897-E089-49B2-9656-970EC42F72C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6ACA4897-E089-49B2-9656-970EC42F72C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C79F2AC-6AD0-4EBF-A6E0-193136399E06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C79F2AC-6AD0-4EBF-A6E0-193136399E06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C79F2AC-6AD0-4EBF-A6E0-193136399E06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C79F2AC-6AD0-4EBF-A6E0-193136399E06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
