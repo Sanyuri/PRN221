@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ResfulAPI.Models
+{
+    public partial class PolicyFee
+    {
+        public int FeeId { get; set; }
+        public string? FeeName { get; set; }
+        public double? Fee { get; set; }
+        public DateTime? CreatedOn { get; set; }
+        public int? CreatedBy { get; set; }
+        public DateTime? ModifiedOn { get; set; }
+        public int? ModifiedBy { get; set; }
+
+        public virtual Account? CreatedByNavigation { get; set; }
+        public virtual Account? ModifiedByNavigation { get; set; }
+    }
+}
