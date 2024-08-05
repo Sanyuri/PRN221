@@ -8,5 +8,8 @@ namespace DemoJSONXML.Models
 {
     class PersonJson
     {
-    }
+            public bool Gender { get; set; }
+            public int Id { get; set; }
+            public string? Name { get; set; }
+        }
 }
