@@ -28,7 +28,7 @@ namespace ResfulAPI.Controllers
 
             if (blog == null)
             {
-                return NotFound();
+                return NotFound($"Blog {id} has not existed");
             }
 
             return blog;
@@ -48,7 +48,7 @@ namespace ResfulAPI.Controllers
         {
             if (id != updatedBlog.BlogId)
             {
-                return BadRequest();
+                return BadRequest($"Blog {updatedBlog.BlogId} doesn't match with id");
             }
 
             _context.Entry(updatedBlog).State = EntityState.Modified;
@@ -78,7 +78,7 @@ namespace ResfulAPI.Controllers
             var blog = await _context.Blogs.FindAsync(id);
             if (blog == null)
             {
-                return NotFound();
+                return NotFound($"Blog {id} doesn't existed");
             }
 
             _context.Blogs.Remove(blog);
